@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <inttypes.h>
 
 #include "entropy.h"                    // Wrapper around /dev/random
 
@@ -74,26 +75,35 @@ int main(int argc, char** argv)
 
     // File pointer
     FILE *file;
+    FILE *filetxt;
 
     // Open file in write mode
-    file = fopen("output1.txt", "w");
+    char bfileName[80];
+    strcpy(bfileName, XX_NAME);
+    strcat(bfileName, ".bin");
+    char fileName[80];
+    strcpy(fileName, XX_NAME);
+    strcat(fileName, ".txt");
+    file = fopen(bfileName, "wb");
+    filetxt = fopen(fileName, "w");
 
     // Check if file was successfully opened
     if (file == NULL) {
         printf("Error opening file!\n");
         return 1;
     }
+    char bl[] = "\n";
  
     for (int round = 1; round <= rounds; ++round) {
         for (int i = 0; i < XX_NUMVALUES; ++i) {
-            fprintf(file, "%d\n", XX_RANDOM());
+            XX_OUTPUT_TYPE next = XX_RANDOM();
+            unsigned char dest[sizeof(next)];
+            for (int u = 0; u < sizeof(next); ++u) {
+                dest[u] = (next >> (8 * (sizeof(next) - (u+1) ))) & 0xff;
+            }
+            fwrite(&dest, sizeof(dest), 1, file);
+            fprintf(filetxt, "%d\n", next);
         }
-
-        XX_ADVANCE(-XX_NUMVALUES);
-        /*for (int i = 0; i < XX_NUMVALUES; ++i) {
-            XX_PRINT_RNGVAL(XX_RANDOM());
-        }*/
-        printf("\n");
     }
     // Close the file
     fclose(file);

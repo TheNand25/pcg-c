@@ -7,15 +7,18 @@
             "      -  state type:  struct pcg_state_64 (%zu bytes)\n" \
             "      -  output func: XSH-RS\n" \
             "\n", sizeof(struct pcg_state_64)
-            
+
+#define XX_NAME                     "C_PCG_XSH_RS_32"
 #define XX_NUMBITS                  "  32bit:"
-#define XX_NUMVALUES                6
+#define XX_NUMVALUES                5000
 #define XX_NUMWRAP                  6
 #define XX_PRINT_RNGVAL(value)      printf(" 0x%08x", value)
 #define XX_RAND_DECL                struct pcg_state_64 rng;
 #define XX_SEEDSDECL(seeds)         uint64_t seeds[1];
 #define XX_SRANDOM_SEEDARGS(seeds)  seeds[0]
 #define XX_SRANDOM_SEEDCONSTS       42u
+#define XX_OUTPUT_TYPE              uint32_t
+#define XX_NUM_OUTPUT_BYTES         4
 #define XX_SRANDOM(...)             \
             pcg_oneseq_64_srandom_r(&rng, __VA_ARGS__)
 #define XX_RANDOM()                 \
@@ -26,4 +29,4 @@
             pcg_oneseq_64_advance_r(&rng, delta)
 
 #include "pcg_variants.h"
-#include "check-base.c"
+#include "check-base1.c"

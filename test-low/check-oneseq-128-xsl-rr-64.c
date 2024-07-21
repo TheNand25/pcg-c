@@ -7,15 +7,18 @@
             "      -  state type:  struct pcg_state_128 (%zu bytes)\n" \
             "      -  output func: XSL-RR\n" \
             "\n", sizeof(struct pcg_state_128)
-            
+
+#define XX_NAME                     "C_PCG_XSL_RR_64"
 #define XX_NUMBITS                  "  64bit:"
-#define XX_NUMVALUES                6
+#define XX_NUMVALUES                5000
 #define XX_NUMWRAP                  3
 #define XX_PRINT_RNGVAL(value)      printf(" 0x%016llx", value)
 #define XX_RAND_DECL                struct pcg_state_128 rng;
 #define XX_SEEDSDECL(seeds)         pcg128_t seeds[1];
 #define XX_SRANDOM_SEEDARGS(seeds)  seeds[0]
 #define XX_SRANDOM_SEEDCONSTS       42u
+#define XX_OUTPUT_TYPE              uint64_t
+#define XX_NUM_OUTPUT_BYTES         8
 #define XX_SRANDOM(...)             \
             pcg_oneseq_128_srandom_r(&rng, __VA_ARGS__)
 #define XX_RANDOM()                 \
@@ -27,7 +30,7 @@
 
 #include "pcg_variants.h"
 #if PCG_HAS_128BIT_OPS
-    #include "check-base.c"
+    #include "check-base1.c"
 #else
     #include <stdio.h>
     int main()

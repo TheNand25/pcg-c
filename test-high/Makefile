@@ -25,7 +25,7 @@ TARGETS = check-pcg128i check-pcg128si check-pcg16i check-pcg16si check-pcg32 \
           check-pcg32f check-pcg32i check-pcg32s check-pcg32si check-pcg32u   \
           check-pcg64 check-pcg64f check-pcg64i check-pcg64s check-pcg64si    \
           check-pcg64u check-pcg8i check-pcg8si \
-          check-pcg32-global check-pcg64-global check-pcg32Test
+          check-pcg32-global check-pcg64-global
 
 LDFLAGS  += -L../src
 LDLIBS   += -lpcg_random
@@ -45,7 +45,6 @@ test: $(TARGETS)
   ../extras/pcg_spinlock.h ../extras/entropy.h
 
 
-check-pcg32Test: check-pcg32Test.o ../extras/entropy.o
 check-pcg128i: check-pcg128i.o ../extras/entropy.o
 check-pcg128si: check-pcg128si.o ../extras/entropy.o
 check-pcg16i: check-pcg16i.o ../extras/entropy.o
@@ -68,8 +67,6 @@ check-pcg8si: check-pcg8si.o ../extras/entropy.o
 check-pcg32-global: check-pcg32-global.o ../extras/entropy.o
 check-pcg64-global: check-pcg64-global.o ../extras/entropy.o
 
-check-pcg32Test.o: check-pcg32Test.c ../include/pcg_variants.h check-base1.c \
-  ../extras/entropy.h
 check-pcg128i.o: check-pcg128i.c ../include/pcg_variants.h check-base.c \
   ../extras/entropy.h
 check-pcg128si.o: check-pcg128si.c ../include/pcg_variants.h check-base.c \
