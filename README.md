@@ -1,4 +1,6 @@
 # PCG Random Number Generation, C Edition
+## Fork of initial PCG Random Number Generation
+This Project is forked and edited from https://github.com/imneme/pcg-c for comparison with a own educational Java version of the PCGs.
 
 [PCG-Random website]: http://www.pcg-random.org
 
