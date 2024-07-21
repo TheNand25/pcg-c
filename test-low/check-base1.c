@@ -28,7 +28,7 @@
 #include <string.h>
 #include <inttypes.h>
 
-#include "entropy.h"                    // Wrapper around /dev/random
+#include "entropy.h"
 
 XX_PREDECLS
 
@@ -56,18 +56,11 @@ int main(int argc, char** argv)
     // You should *always* seed the RNG.  The usual time to do it is the
     // point in time when you create RNG (typically at the beginning of the
     // program).
-    //
-    // XX_SRANDOM_R takes two YY-bit constants (the initial state, and the
-    // rng sequence selector; rngs with different sequence selectors will
-    // *never* have random sequences that coincide, at all) - the code below 
-    // shows three possible ways to do so.
 
     if (nondeterministic_seed) {
         // Seed with external entropy
-
     } else {
         // Seed with a fixed constant
-        
         XX_SRANDOM(XX_SRANDOM_SEEDCONSTS);
     }
     
@@ -77,13 +70,15 @@ int main(int argc, char** argv)
     FILE *file;
     FILE *filetxt;
 
-    // Open file in write mode
+    // Create files with correct naming
     char bfileName[80];
     strcpy(bfileName, XX_NAME);
     strcat(bfileName, ".bin");
+
     char fileName[80];
     strcpy(fileName, XX_NAME);
     strcat(fileName, ".txt");
+
     file = fopen(bfileName, "wb");
     filetxt = fopen(fileName, "w");
 
@@ -92,21 +87,24 @@ int main(int argc, char** argv)
         printf("Error opening file!\n");
         return 1;
     }
-    char bl[] = "\n";
- 
+
     for (int round = 1; round <= rounds; ++round) {
+        // itarate until we got XX_NUMVALUES amount of numbers generated
         for (int i = 0; i < XX_NUMVALUES; ++i) {
             XX_OUTPUT_TYPE next = XX_RANDOM();
             unsigned char dest[sizeof(next)];
+            // write the uint32_t or uint64_t binary represented into dest
             for (int u = 0; u < sizeof(next); ++u) {
                 dest[u] = (next >> (8 * (sizeof(next) - (u+1) ))) & 0xff;
             }
+            // write into files
             fwrite(&dest, sizeof(dest), 1, file);
             fprintf(filetxt, "%d\n", next);
         }
     }
-    // Close the file
+    // Close the files
     fclose(file);
+    fclose(filetxt);
 
     return 0;
 }
