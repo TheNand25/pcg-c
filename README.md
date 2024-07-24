@@ -14,6 +14,8 @@ This Project is forked and edited from https://github.com/imneme/pcg-c for compa
   - `./check-oneseq-64-rxs-m-xs-64.exe`
 * output files will be created in the test-low directory
 
+## Original README:
+
 [PCG-Random website]: http://www.pcg-random.org
 
 This code provides an implementation of the PCG family of random number
