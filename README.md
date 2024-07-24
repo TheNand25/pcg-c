@@ -2,6 +2,18 @@
 ## Fork of initial PCG Random Number Generation
 This Project is forked and edited from https://github.com/imneme/pcg-c for comparison with a own educational Java version of the PCGs.
 
+## Creating Example .bin for Java comparison
+
+* run command `make` in root
+* go to `cd test-low`
+* then start one of:
+  - `./check-oneseq-64-xsh-rs-32.exe`
+  - `./check-oneseq-64-xsh-rr-32.exe`
+  - `./check-oneseq-128-xsl-rr-64.exe`
+  - `./check-oneseq-32-rxs-m-xs-32.exe`
+  - `./check-oneseq-64-rxs-m-xs-64.exe`
+* output files will be created in the test-low directory
+
 [PCG-Random website]: http://www.pcg-random.org
 
 This code provides an implementation of the PCG family of random number
